@@ -1,0 +1,25 @@
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+# VS files
+.vs/
+.vscode/
+.idea/
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Tạm thời
+*.tmp
+*.bak
