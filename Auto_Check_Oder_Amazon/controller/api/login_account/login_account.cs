@@ -19,8 +19,8 @@ namespace Auto_Check_Oder_Amazon.controller.api.login_account
                 {
                     var requestBody = new
                     {
-                        username = "mariuszwojtkielewicz064@gmail.com",
-                        password = "cuquki-zaxid-pokomy",
+                        username = gmail,
+                        password = pass,
                         captcha = (string)null
                     };
 

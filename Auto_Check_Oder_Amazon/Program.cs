@@ -1,4 +1,6 @@
-﻿using Auto_Check_Oder_Amazon.view.settings_account;
+﻿using Auto_Check_Oder_Amazon.controller;
+using Auto_Check_Oder_Amazon.model.Login;
+using Auto_Check_Oder_Amazon.view.settings_account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,20 @@ namespace Auto_Check_Oder_Amazon
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login_account());
+
+            // Kiểm tra đăng nhập trước khi chạy form chính
+            string path = Environment.CurrentDirectory + "\\Settings\\config.txt";
+            string data = FileHelper_Controller.ReadFileTxt(path);
+            if (data != null)
+            {
+                LoginData.Token = data.Split('|')[2];
+                LoginData.Email = data.Split('|')[0];
+                Application.Run(new Form1()); // Chạy Form1 nếu đăng nhập thành công
+            }
+            else
+            {
+                Application.Run(new Login_account()); // Chạy Login_account nếu chưa đăng nhập
+            }
         }
     }
 }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Auto_Check_Oder_Amazon.model.Login
 {
-
+    public class LoginData
+    {
+        public static string Token = null;
+        public static string Email = null;
+    }
     public class Response_login_account
     {
         public string token { get; set; }

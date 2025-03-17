@@ -1,3 +1,4 @@
+﻿
 ﻿using Auto_Check_Oder_Amazon.controller;
 using Auto_Check_Oder_Amazon.controller.api.login_account;
 using Auto_Check_Oder_Amazon.model.Login;
@@ -18,33 +19,54 @@ namespace Auto_Check_Oder_Amazon.view.settings_account
     {
         public Login_account()
         {
-            checkLogin();
             InitializeComponent();
         }
         public void checkLogin()
         {
-            string path =  Environment.CurrentDirectory + "\\Settings\\config.txt";
+            txtGmail.Enabled = true;
+            txtPassword.Enabled = true;
+            btnLogin.Enabled = true;
+            btnLogin.Text = "Login";
+
+            string path = Environment.CurrentDirectory + "\\Settings\\config.txt";
             string data = FileHelper_Controller.ReadFileTxt(path);
-            if (data != null) { 
+            if (data != null)
+            {
+                LoginData.Token = data.Split('|')[2];
+                LoginData.Email = data.Split('|')[0];
                 Form1 form1 = new Form1();
-                form1.Show();
-                this.Hide();
+                form1.FormClosed += Form1_FormClosed;
+                this.Hide(); // Ẩn form Login_account
+                form1.Show(); // Hiển thị Form1
             }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Close();
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+            txtGmail.Enabled = false;
+            txtPassword.Enabled = false;
+            btnLogin.Enabled = false;
+            btnLogin.Text = "Running...";
+
             string gmail = txtGmail.Text.Trim();
             string pass = txtPassword.Text.Trim();
-            if (gmail != string.Empty && pass != string.Empty) { 
+            if (gmail != string.Empty && pass != string.Empty)
+            {
                 string response = await Login(gmail, pass);
-                if (response != null)
+                if (response != null && response != "Unauthorized")
                 {
                     var data_Response = JsonConvert.DeserializeObject<Response_login_account>(response);
 
                     string path = Environment.CurrentDirectory + "\\Settings\\config.txt";
                     string content = gmail + "|" + pass + "|" + data_Response.token;
                     FileHelper_Controller.WriteFileTxt(path, content);
+
+                    checkLogin();
                 }
             }
         }
@@ -53,7 +75,7 @@ namespace Auto_Check_Oder_Amazon.view.settings_account
             try
             {
                 var response = await API_login_account.Login(gmail, pass);
-                return  response.ToString();
+                return response.ToString();
             }
             catch (Exception ex)
             {
