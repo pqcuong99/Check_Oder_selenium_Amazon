@@ -236,7 +236,7 @@ namespace Auto_Check_Oder_Amazon
             Application.Exit();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             pnLoad.Visible = true;
             lbLoading.Visible = true;
@@ -248,22 +248,39 @@ namespace Auto_Check_Oder_Amazon
             lbAcountEmail.Text = TruncateString(LoginData.Email);
             this.Text = LoginData.Email;
             grvListProfile.AllowUserToAddRows = false;
-            SetVisibleListData(false);
-            Getdata();
-            lbLoading.Visible = false;
+            
+            bool isGetData = await Getdata();
+            if (isGetData) {
+                SetVisibleListData(false);
+                lbLoading.Visible = false;
+            }
+            else
+            {
+                lbLoading.Visible = true;
+                lbLoading.Text = "Out session, please logout";
+            }
+            
+            
         }
         public void SetVisibleListData(bool visible)
         {
             rtbData.Visible = visible ? true : false;
             grvListProfile.Visible = visible ? false : true;
         }
-        public async void Getdata()
+        public async Task<bool> Getdata()
         {
             DashbroadController dashbroad = new DashbroadController();
             var dataProfiles = await dashbroad.GetDataProfiles(1, 100);
-            foreach (var profile in dataProfiles) {
-                grvListProfile.Rows.Add(false,profile.Name,profile.Platform,profile.ID_Profile,profile.MainWebsite);
+            if(dataProfiles.Count > 0)
+            {
+                foreach (var profile in dataProfiles)
+                {
+                    grvListProfile.Rows.Add(false, profile.Name, profile.Platform, profile.ID_Profile, profile.MainWebsite);
+                }
+                return true;
             }
+            
+            return false;
         }
         public  string TruncateString(string input)
         {
