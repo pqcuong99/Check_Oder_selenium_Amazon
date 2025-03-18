@@ -34,5 +34,18 @@ namespace Auto_Check_Oder_Amazon.controller
             }
             return null;
         }
+        public static void DeleteFile(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath)) // Kiểm tra xem file có tồn tại không
+                {
+                    File.Delete(filePath); // Xóa file
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
     }
 }

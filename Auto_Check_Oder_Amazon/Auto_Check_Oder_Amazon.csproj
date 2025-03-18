@@ -86,6 +86,7 @@
     <Compile Include="controller\api\login_account\login_account.cs" />
     <Compile Include="controller\automation\Script_check_oder.cs" />
     <Compile Include="controller\automation\Selenium\function_auto.cs" />
+    <Compile Include="controller\DashbroadController.cs" />
     <Compile Include="controller\FileHelper_Controller.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -97,6 +98,7 @@
     <Compile Include="model\Url_base.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="view\dashbroad\DataItemProfile.cs" />
     <Compile Include="view\settings_account\Login_account.cs">
       <SubType>Form</SubType>
     </Compile>
