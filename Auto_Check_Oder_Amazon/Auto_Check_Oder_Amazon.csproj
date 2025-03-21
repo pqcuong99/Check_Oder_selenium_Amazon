@@ -94,6 +94,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\Dolphin_info\Startbrowser.cs" />
     <Compile Include="model\Login\Login_account.cs" />
     <Compile Include="model\Url_base.cs" />
     <Compile Include="Program.cs" />

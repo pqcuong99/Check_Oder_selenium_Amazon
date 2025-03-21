@@ -1,7 +1,10 @@
 ﻿using Auto_Check_Oder_Amazon.controller;
+using Auto_Check_Oder_Amazon.controller.automation;
+using Auto_Check_Oder_Amazon.model.Dolphin_info;
 using Auto_Check_Oder_Amazon.model.Login;
 using Auto_Check_Oder_Amazon.view.dashbroad;
 using Auto_Check_Oder_Amazon.view.settings_account;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -240,6 +243,7 @@ namespace Auto_Check_Oder_Amazon
         {
             pnLoad.Visible = true;
             lbLoading.Visible = true;
+            lbLoading.Text = "Please wait...";
 
             string path = Path.Combine(Environment.CurrentDirectory, "..\\..\\view\\images\\logout.png");
             path = Path.GetFullPath(path); // Chuyển đổi đường dẫn tương đối thành đường dẫn tuyệt đối
@@ -290,12 +294,27 @@ namespace Auto_Check_Oder_Amazon
             return input.Length > 20 ? input.Substring(0, 17) + "..." : input;
         }
 
-        private void btnStartAuto_Click(object sender, EventArgs e)
+        private async void btnStartAuto_Click(object sender, EventArgs e)
         {
-            foreach(var profile in selectedItems)
-            {
-                int dem = 1;
-            }
+            await RunAutoCheckOders();
+        }
+        public async Task RunAutoCheckOders()
+        {
+            //foreach (var profile in selectedItems)
+            //{
+            //    Script_check_oder script_Check_Oder = new Script_check_oder();
+            //    string response = await script_Check_Oder.StartBrowser(Int32.Parse(profile.ID_Profile));
+            //    if (response != null)
+            //    {
+            //        var convertResponse = JsonConvert.DeserializeObject< Startbrowser >(response);
+            //        await script_Check_Oder.StartAuto(convertResponse.automation.wsEndpoint);
+            //    }
+            //}
+
+            //   /devtools/browser/0a8c0f06-96dc-4217-a8f2-c02b683cfa24
+            Script_check_oder script_Check_Oder = new Script_check_oder();
+            //await script_Check_Oder.StartAuto("/devtools/browser/0a8c0f06-96dc-4217-a8f2-c02b683cfa24");
+            await script_Check_Oder.StartAuto2(55345);
         }
 
         private void imageLogout_Click(object sender, EventArgs e)

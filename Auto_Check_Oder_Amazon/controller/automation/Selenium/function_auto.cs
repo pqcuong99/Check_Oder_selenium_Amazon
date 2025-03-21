@@ -14,16 +14,36 @@ namespace Auto_Check_Oder_Amazon.controller.automation.Selenium
     {
         public ChromeDriver ConnectDriver(int port)
         {
-            ChromeOptions options = new ChromeOptions();
-            options.DebuggerAddress = $"127.0.0.1:{port}";
+            try
+            {
+                ChromeOptions options = new ChromeOptions();
+                options.DebuggerAddress = $"127.0.0.1:{0}";
 
-            FileInfo file_driver = new FileInfo("\\Settings\\chromedriver.exe");
-            ChromeDriverService service = ChromeDriverService.CreateDefaultService(file_driver.DirectoryName, file_driver.Name);
-            service.HideCommandPromptWindow = true;
+                FileInfo file_driver = new FileInfo(Environment.CurrentDirectory + "\\Settings\\chromedriver.exe");
+                ChromeDriverService service = ChromeDriverService.CreateDefaultService(file_driver.DirectoryName, file_driver.Name);
+                service.HideCommandPromptWindow = true;
 
-            ChromeDriver driver = new ChromeDriver(service, options);
+                ChromeDriver driver = new ChromeDriver(service, options);
 
-            return driver;
+                return driver;
+            }
+            catch (Exception ex) { 
+                return null;
+            }
+        }
+        public IWebDriver ConnectWithWsEndpoint(string wsEndpoint)
+        {
+            try
+            {
+                ChromeOptions options = new ChromeOptions();
+                string debuggerAddress = $"ws://localhost:9222{wsEndpoint}";
+                options.DebuggerAddress = debuggerAddress;
+                IWebDriver driver = new ChromeDriver(options);
+                return driver;
+            }
+            catch (Exception ex) { 
+                return null;
+            }
         }
         public void GotoUrl(ChromeDriver driver, string url)
         {

@@ -159,5 +159,34 @@ namespace Auto_Check_Oder_Amazon.controller.api.dolphin_anty
                 }
             }
         }
+        public async Task<string> StartBrowserAutomation(string token,int browser_id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = $"http://localhost:3001/v1.0/browser_profiles/{browser_id}/start?automation=1";
+
+                try
+                {
+                    using (HttpResponseMessage response = await client.GetAsync(url))
+                    {
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            Console.WriteLine($"Request failed: {response.StatusCode}");
+                            return null;
+                        }
+                        else
+                        {
+                            string responseString = await response.Content.ReadAsStringAsync();
+                            return responseString;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    return null;
+                }
+            }
+        }
     }
 }
